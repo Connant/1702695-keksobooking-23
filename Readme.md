@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Daria Selezneva](https://up.htmlacademy.ru/javascript/23/user/1702695).
-* Наставник: `Неизвестно`.
+* Наставник: [Семён Якушев](https://htmlacademy.ru/profile/id1118791).
 
 ---
 
