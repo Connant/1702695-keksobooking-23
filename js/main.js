@@ -1,5 +1,5 @@
-const AVATAR = [img/avatars/user01.png, img/avatars/user02.png, img/avatars/user03.png, img/avatars/user04.png, img/avatars/user05.png,
-  img/avatars/user06.png, img/avatars/user07.png, img/avatars/user08.png];
+const AVATAR = ['img/avatars/user01.png', 'img/avatars/user02.png', 'img/avatars/user03.png', 'img/avatars/user04.png', 'img/avatars/user05.png',
+  'img/avatars/user06.png', 'img/avatars/user07.png', 'img/avatars/user08.png'];
 const TITLE = ['Old palace', 'Spacious apartment', 'Two-storey house', 'Tree house', 'Dollhouse'];
 const TYPE = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const DESCRIPTION = ['House with the ghosts', 'Sunny side', 'Large loggia', 'Next to the park'];
@@ -34,7 +34,7 @@ const generateObject = () => {
       avatar: getRandomElement(AVATAR),
     },
     offer: {
-      title: getRandomElement(TITLES),
+      title: getRandomElement(TITLE),
       address: `Coordinates: ${COORDINATES.lat}, ${COORDINATES.lng}`,
       price: getRandomInt(0, 10000),
       type: getRandomElement(TYPE),
@@ -53,6 +53,6 @@ const generateObject = () => {
   };
 };
 
-const similarOffers = new Array(numberObjects).fill(null).map(() => creatOffers());
+const similarOffers = new Array(numberObjects).fill(null).map(() => generateObject());
 
 similarOffers();
