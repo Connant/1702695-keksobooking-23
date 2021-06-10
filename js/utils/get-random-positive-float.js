@@ -1,6 +1,8 @@
+/* eslint-disable */
 // Функция взята из интернета и доработана
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
 
+// eslint-disable-next-line id-length
 function getRandomPositiveFloat (a, b, digits = 1) {
   // Чтобы не заставлять пользователя нашей функции помнить порядок аргументов,
   // реализуем поддержку передачи минимального и максимального значения в любом порядке,
