@@ -45,14 +45,14 @@ const generateObject = () => {
       features: getRandomElement(FEATURES),
       description: getRandomElement(DESCRIPTION),
       photos: getRandomElement(PHOTOS),
-      location: {
-        lat: COORDINATES.lat,
-        lng: COORDINATES.lng,
-      },
+    },
+    location: {
+      lat: COORDINATES.lat,
+      lng: COORDINATES.lng,
     },
   };
 };
 
 const similarOffers = new Array(numberObjects).fill(null).map(() => generateObject());
 
-similarOffers();
+similarOffers.splice();
