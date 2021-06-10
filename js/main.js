@@ -1,5 +1,5 @@
 const AVATAR = ['img/avatars/user01.png', 'img/avatars/user02.png', 'img/avatars/user03.png', 'img/avatars/user04.png', 'img/avatars/user05.png',
-  'img/avatars/user06.png', 'img/avatars/user07.png', 'img/avatars/user08.png'];
+  'img/avatars/user06.png', 'img/avatars/user07.png', 'img/avatars/user08.png', 'img/avatars/user09.png', 'img/avatars/user10.png'];
 const TITLE = ['Old palace', 'Spacious apartment', 'Two-storey house', 'Tree house', 'Dollhouse'];
 const TYPE = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const DESCRIPTION = ['House with the ghosts', 'Sunny side', 'Large loggia', 'Next to the park'];
@@ -31,7 +31,7 @@ const generateObject = () => {
 
   return {
     author: {
-      avatar: getRandomElement(AVATAR),
+      avatar: AVATAR.splice(getRandomInt(0, AVATAR.length - 1), 1),
     },
     offer: {
       title: getRandomElement(TITLE),
