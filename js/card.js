@@ -85,7 +85,7 @@ const fillTemplateCard = ({author, offer}) => {
 const createCards = (ads) => {
   const similarAdsFragment = document.createDocumentFragment();
 
-  ads.forEach((card) => {
+  ads.forEach(() => {
     const element = fillTemplateCard(card);
     similarAdsFragment.appendChild(element);
   });

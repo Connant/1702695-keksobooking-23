@@ -21,7 +21,7 @@ const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/randomIdxavascr
 
 const numberObjects = 10;
 
-const generateObject = () => {
+export const generateObject = () => {
   const COORDINATES = {
     lat: getRandomFloat(30, 40, 6),
     lng: getRandomFloat(10, 15, 6),
@@ -66,7 +66,9 @@ export const cardPhotos = card.querySelector('.popup__photos');
 export const cardAvatar = card.querySelector('.popup__avatar');
 export const cardDescription = card.querySelector('.popup__description');
 
-const similarOffers = new Array(numberObjects).fill(null).map(() => generateObject());
+const similarOffers = () => {
+  new Array(numberObjects).fill(null).map(() => generateObject());
+};
 
 similarOffers();
 
