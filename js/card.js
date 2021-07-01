@@ -82,13 +82,11 @@ const fillTemplateCard = ({author, offer}) => {
   return card;
 };
 
-const createCards = (ads) => {
+export const createCards = (data) => {
   const similarAdsFragment = document.createDocumentFragment();
+  const element = fillTemplateCard(data);
+  similarAdsFragment.appendChild(element);
 
-  ads.forEach(() => {
-    const element = fillTemplateCard(card);
-    similarAdsFragment.appendChild(element);
-  });
   return mapCanvas.appendChild(similarAdsFragment);
 };
 

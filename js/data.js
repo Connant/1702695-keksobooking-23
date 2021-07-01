@@ -15,9 +15,9 @@ export const HOUSE_TYPE = {
 const DESCRIPTION = ['House with the ghosts', 'Sunny side', 'Large loggia', 'Next to the park'];
 const TIME = ['12:00', '13:00', '14:00'];
 const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/randomIdxavascript-1/keksobooking/duonguyen-8LrGtIxxa4w.randomIdxpg',
-  'https://assets.htmlacademy.ru/content/intensive/randomIdxavascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.randomIdxpg',
-  'https://assets.htmlacademy.ru/content/intensive/randomIdxavascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.randomIdxpg'];
+const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 
 const numberObjects = 10;
 
@@ -40,9 +40,9 @@ export const generateObject = () => {
       guests: getRandomInt(1, 5),
       checkin: getRandomElement(TIME),
       checkout: getRandomElement(TIME),
-      features: getRandomElement(FEATURES),
+      features: [getRandomElement(FEATURES)],
       description: getRandomElement(DESCRIPTION),
-      photos: getRandomElement(PHOTOS),
+      photos: [getRandomElement(PHOTOS)],
     },
     location: {
       lat: COORDINATES.lat,
@@ -69,7 +69,5 @@ export const cardDescription = card.querySelector('.popup__description');
 const similarOffers = () => {
   new Array(numberObjects).fill(null).map(() => generateObject());
 };
-
-similarOffers();
 
 export {similarOffers};
