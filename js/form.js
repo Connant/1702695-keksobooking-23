@@ -23,22 +23,32 @@ const guests = {
   one: '1',
   two: '2',
   three: '3',
+  nonGuest: '0',
 };
 
 const checkRoomsAvailable = () => {
   const numberOfRooms = roomsSelect.value;
-  const numberOfguests = guestsSelect.value;
+  const numberOfGuests = guestsSelect.value;
   let error = '';
 
-  if (numberOfRooms === rooms.one && numberOfguests !== guests.one) {
-    error += 'Для 1 гостя';
-  } else if (numberOfRooms === rooms.two && numberOfguests !== guests.two) {
-    error += 'Для 2 гостей';
-  } else if (numberOfRooms === rooms.three && numberOfguests !== guests.three) {
-    error += 'Для 3 гостей';
-  } else if (numberOfRooms === rooms.oneHundreed) {
+  // if (numberOfRooms === rooms.one && numberOfGuests > guests.one) {
+  //   error += 'Для 1 гостя';
+  // } else if (numberOfRooms === rooms.oneHundreed && numberOfGuests !== guests.zero) {
+  //   error += 'Не для гостей';
+  // } else if (numberOfRooms === rooms.oneHundreed && numberOfGuests > numberOfRooms || numberOfGuests !== guests.zero) {
+  //   error += `Не более ${numberOfRooms} гостей`;
+  // }
+
+  if (numberOfRooms === rooms.oneHundreed && numberOfGuests !== guests.nonGuest) {
     error += 'Не для гостей';
+  } else if (numberOfRooms === rooms.oneHundreed && numberOfGuests === guests.nonGuest) {
+    return;
+  } else if (numberOfRooms === rooms.one && numberOfGuests !== guests.one) {
+    error += 'Для 1 гостя';
+  } else if (numberOfRooms === rooms.oneHundreed || numberOfGuests === guests.nonGuest ||numberOfGuests > numberOfRooms) {
+    error += `Не более ${numberOfRooms} гостей`;
   }
+
   guestsSelect.setCustomValidity(error);
   guestsSelect.reportValidity();
 };
