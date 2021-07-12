@@ -12,6 +12,11 @@ const adTitle = adForm.querySelector('#title');
 const roomsSelect = adForm.querySelector('#room_number');
 const guestsSelect = adForm.querySelector('#capacity');
 
+const checkInTime = adForm.querySelector('#timein');
+const checkOutTime = adForm.querySelector('#timeout');
+const typeOfHouse = adForm.querySelector('#type');
+const price = adForm.querySelector('#price');
+
 const rooms = {
   one: '1',
   two: '2',
@@ -26,6 +31,30 @@ const guests = {
   nonGuest: '0',
 };
 
+const minPrice = {
+  'bungalow': 0,
+  'flat': 1000,
+  'hotel': 3000,
+  'house': 5000,
+  'palace': 10000,
+};
+
+const onTimeChange = (timeValue) => {
+  checkInTime.value = timeValue.target.value;
+  checkOutTime.value = timeValue.target.value;
+};
+
+checkInTime.addEventListener('change', onTimeChange);
+checkOutTime.addEventListener('change', onTimeChange);
+
+const onTypeOfHouseChange = () => {
+  const typeOfHouseValue = typeOfHouse.value;
+  price.setAttribute('min', minPrice[typeOfHouseValue]);
+  price.placeholder = minPrice[typeOfHouseValue];
+};
+
+typeOfHouse.addEventListener('change', onTypeOfHouseChange);
+
 const checkRoomsAvailable = () => {
   const numberOfRooms = roomsSelect.value;
   const numberOfGuests = guestsSelect.value;
@@ -38,7 +67,7 @@ const checkRoomsAvailable = () => {
     return;
   } else if (numberOfRooms === rooms.one && numberOfGuests !== guests.one) {
     error += 'Для 1 гостя';
-  } else if (numberOfGuests === guests.nonGuest ||numberOfGuests > numberOfRooms) {
+  } else if (numberOfGuests === guests.nonGuest || numberOfGuests > numberOfRooms) {
     error += `Не более ${numberOfRooms} гостей`;
   }
 
