@@ -11,7 +11,6 @@ const maxTitleLength = 100;
 const adTitle = adForm.querySelector('#title');
 const roomsSelect = adForm.querySelector('#room_number');
 const guestsSelect = adForm.querySelector('#capacity');
-
 const checkInTime = adForm.querySelector('#timein');
 const checkOutTime = adForm.querySelector('#timeout');
 const typeOfHouse = adForm.querySelector('#type');
