@@ -31,21 +31,14 @@ const checkRoomsAvailable = () => {
   const numberOfGuests = guestsSelect.value;
   let error = '';
 
-  // if (numberOfRooms === rooms.one && numberOfGuests > guests.one) {
-  //   error += 'Для 1 гостя';
-  // } else if (numberOfRooms === rooms.oneHundreed && numberOfGuests !== guests.zero) {
-  //   error += 'Не для гостей';
-  // } else if (numberOfRooms === rooms.oneHundreed && numberOfGuests > numberOfRooms || numberOfGuests !== guests.zero) {
-  //   error += `Не более ${numberOfRooms} гостей`;
-  // }
-
   if (numberOfRooms === rooms.oneHundreed && numberOfGuests !== guests.nonGuest) {
     error += 'Не для гостей';
   } else if (numberOfRooms === rooms.oneHundreed && numberOfGuests === guests.nonGuest) {
+    guestsSelect.setCustomValidity('');
     return;
   } else if (numberOfRooms === rooms.one && numberOfGuests !== guests.one) {
     error += 'Для 1 гостя';
-  } else if (numberOfRooms === rooms.oneHundreed || numberOfGuests === guests.nonGuest ||numberOfGuests > numberOfRooms) {
+  } else if (numberOfGuests === guests.nonGuest ||numberOfGuests > numberOfRooms) {
     error += `Не более ${numberOfRooms} гостей`;
   }
 
