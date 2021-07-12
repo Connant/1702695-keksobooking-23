@@ -5,6 +5,92 @@ const mapForm = document.querySelector('.map__filters');
 const mapSelects = mapForm.querySelectorAll('select');
 const mapFeatures = mapForm.querySelector('.map__features');
 
+const minTitleLength = 30;
+const maxTitleLength = 100;
+
+const adTitle = adForm.querySelector('#title');
+const roomsSelect = adForm.querySelector('#room_number');
+const guestsSelect = adForm.querySelector('#capacity');
+
+const checkInTime = adForm.querySelector('#timein');
+const checkOutTime = adForm.querySelector('#timeout');
+const typeOfHouse = adForm.querySelector('#type');
+const price = adForm.querySelector('#price');
+
+const rooms = {
+  one: '1',
+  two: '2',
+  three: '3',
+  oneHundreed: '100',
+};
+
+const guests = {
+  one: '1',
+  two: '2',
+  three: '3',
+  nonGuest: '0',
+};
+
+const minPrice = {
+  'bungalow': 0,
+  'flat': 1000,
+  'hotel': 3000,
+  'house': 5000,
+  'palace': 10000,
+};
+
+const onTimeChange = (timeValue) => {
+  checkInTime.value = timeValue.target.value;
+  checkOutTime.value = timeValue.target.value;
+};
+
+checkInTime.addEventListener('change', onTimeChange);
+checkOutTime.addEventListener('change', onTimeChange);
+
+const onTypeOfHouseChange = () => {
+  const typeOfHouseValue = typeOfHouse.value;
+  price.setAttribute('min', minPrice[typeOfHouseValue]);
+  price.placeholder = minPrice[typeOfHouseValue];
+};
+
+typeOfHouse.addEventListener('change', onTypeOfHouseChange);
+
+const checkRoomsAvailable = () => {
+  const numberOfRooms = roomsSelect.value;
+  const numberOfGuests = guestsSelect.value;
+  let error = '';
+
+  if (numberOfRooms === rooms.oneHundreed && numberOfGuests !== guests.nonGuest) {
+    error += 'Не для гостей';
+  } else if (numberOfRooms === rooms.oneHundreed && numberOfGuests === guests.nonGuest) {
+    guestsSelect.setCustomValidity('');
+    return;
+  } else if (numberOfRooms === rooms.one && numberOfGuests !== guests.one) {
+    error += 'Для 1 гостя';
+  } else if (numberOfGuests === guests.nonGuest || numberOfGuests > numberOfRooms) {
+    error += `Не более ${numberOfRooms} гостей`;
+  }
+
+  guestsSelect.setCustomValidity(error);
+  guestsSelect.reportValidity();
+};
+
+const checkTitleLength = () => {
+  const valueLength = adTitle.value.length;
+
+  if (valueLength < minTitleLength) {
+    adTitle.setCustomValidity(`Добавьте еще ${minTitleLength - valueLength} символа`);
+  } else if (valueLength > maxTitleLength) {
+    adTitle.setCustomValidity(`Удалите лишние ${valueLength - maxTitleLength} символа`);
+  } else {
+    adTitle.setCustomValidity('');
+  }
+  adTitle.reportValidity();
+};
+
+adTitle.addEventListener('input', checkTitleLength);
+adForm.addEventListener('change', checkRoomsAvailable);
+
 export const disableFilters = () => {
   mapForm.classList.add('map__filters--disabled');
   mapSelects.forEach((select) => {
