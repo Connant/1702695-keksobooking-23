@@ -67,7 +67,8 @@ export const cardAvatar = card.querySelector('.popup__avatar');
 export const cardDescription = card.querySelector('.popup__description');
 
 const similarOffers = () => {
-  new Array(numberObjects).fill(null).map(() => generateObject());
+  const result = new Array(numberObjects).fill(null).map(() => generateObject());
+  return result;
 };
 
 export {similarOffers};

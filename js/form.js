@@ -1,4 +1,4 @@
-const adForm = document.querySelector('.ad-form');
+export const adForm = document.querySelector('.ad-form');
 const formFieldsets = adForm.querySelectorAll('fieldset');
 
 const mapForm = document.querySelector('.map__filters');
@@ -15,6 +15,12 @@ const checkInTime = adForm.querySelector('#timein');
 const checkOutTime = adForm.querySelector('#timeout');
 const typeOfHouse = adForm.querySelector('#type');
 const price = adForm.querySelector('#price');
+
+export const location = adForm.querySelector('#address');
+export const setAddressInput = (coords) => {
+  location.value = coords;
+};
+
 
 const rooms = {
   one: '1',
