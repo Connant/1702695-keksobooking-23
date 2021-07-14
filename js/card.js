@@ -1,7 +1,8 @@
-import {generateObject} from './data.js';
+// import { generateObject } from './data.js';
 import { HOUSE_TYPE } from './data.js';
 
-import { card,
+import {
+  card,
   cardTitle,
   cardAddress,
   cardPrice,
@@ -14,9 +15,6 @@ import { card,
   cardDescription
 } from './data.js';
 
-
-const mapCanvas = document.querySelector('.map__canvas');
-
 const fillElementAdsData = (adsData, element, text) => {
   if (!adsData) {
     return element.classList.add('visually-hidden');
@@ -24,7 +22,7 @@ const fillElementAdsData = (adsData, element, text) => {
   element.textContent = text;
 };
 
-const fillTemplateCard = ({author, offer}) => {
+const fillTemplateCard = ({ author, offer }) => {
 
   fillElementAdsData(offer.title, cardTitle, offer.title);
   fillElementAdsData(offer.address, cardAddress, offer.address);
@@ -32,7 +30,7 @@ const fillTemplateCard = ({author, offer}) => {
   fillElementAdsData(offer.type, cardType, HOUSE_TYPE[offer.type]);
   fillElementAdsData(offer.description, cardDescription, offer.description);
 
-  if(!author.avatar) {
+  if (!author.avatar) {
     cardAvatar.classList.add('visually-hidden');
   } else {
     cardAvatar.src = author.avatar;
@@ -51,7 +49,7 @@ const fillTemplateCard = ({author, offer}) => {
   }
 
   cardFeatures.innerHTML = '';
-  if(!offer.features) {
+  if (!offer.features) {
     cardFeatures.classList.add('visually-hidden');
   } else {
     offer.features.forEach((feature) => {
@@ -65,7 +63,7 @@ const fillTemplateCard = ({author, offer}) => {
   }
 
   cardPhotos.innerHTML = '';
-  if(!offer.features) {
+  if (!offer.features) {
     cardFeatures.classList.add('visually-hidden');
   } else {
     offer.photos.forEach((photo) => {
@@ -82,12 +80,12 @@ const fillTemplateCard = ({author, offer}) => {
   return card;
 };
 
-export const createCards = (data) => {
-  const similarAdsFragment = document.createDocumentFragment();
-  const element = fillTemplateCard(data);
-  similarAdsFragment.appendChild(element);
+// export const createCards = (data) => {
+//   const similarAdsFragment = document.createDocumentFragment();
+//   const element = fillTemplateCard(data);
+//   similarAdsFragment.appendChild(element);
 
-  return mapCanvas.appendChild(similarAdsFragment);
-};
+//   return mapCanvas.appendChild(similarAdsFragment);
+// };
 
-createCards(generateObject());
+export { fillTemplateCard };
