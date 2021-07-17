@@ -1,3 +1,5 @@
+import { showPopup, showErrorPopup } from './popup.js';
+
 export const adForm = document.querySelector('.ad-form');
 const formFieldsets = adForm.querySelectorAll('fieldset');
 
@@ -44,13 +46,13 @@ const minPrice = {
   'palace': 10000,
 };
 
-const onTimeChange = (timeValue) => {
-  checkInTime.value = timeValue.target.value;
-  checkOutTime.value = timeValue.target.value;
+const timeChange = (evt) => {
+  checkInTime.value = evt.target.value;
+  checkOutTime.value = evt.target.value;
 };
 
-checkInTime.addEventListener('change', onTimeChange);
-checkOutTime.addEventListener('change', onTimeChange);
+checkInTime.addEventListener('change', timeChange);
+checkOutTime.addEventListener('change', timeChange);
 
 const onTypeOfHouseChange = () => {
   const typeOfHouseValue = typeOfHouse.value;
@@ -82,14 +84,14 @@ const checkRoomsAvailable = () => {
 
 const checkTitleLength = () => {
   const valueLength = adTitle.value.length;
+  let error = '';
 
   if (valueLength < minTitleLength) {
-    adTitle.setCustomValidity(`Добавьте еще ${minTitleLength - valueLength} символа`);
+    error = `Добавьте еще ${minTitleLength - valueLength} символа`;
   } else if (valueLength > maxTitleLength) {
-    adTitle.setCustomValidity(`Удалите лишние ${valueLength - maxTitleLength} символа`);
-  } else {
-    adTitle.setCustomValidity('');
+    error = `Удалите лишние ${valueLength - maxTitleLength} символа`;
   }
+  adTitle.setCustomValidity(error);
   adTitle.reportValidity();
 };
 
@@ -123,5 +125,14 @@ export const activateForm = () => {
   adForm.classList.remove('ad-form--disabled');
   formFieldsets.forEach((fieldset) => {
     fieldset.disabled = false;
+  });
+};
+
+export const setFormSubmit = (send) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    send(evt.target)
+      .then(() => showPopup())
+      .catch(() => showErrorPopup());
   });
 };
