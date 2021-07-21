@@ -1,7 +1,9 @@
+import { defaultCoords } from './map.js';
+
 export const adForm = document.querySelector('.ad-form');
 const formFieldsets = adForm.querySelectorAll('fieldset');
 
-const mapForm = document.querySelector('.map__filters');
+export const mapForm = document.querySelector('.map__filters');
 const mapSelects = mapForm.querySelectorAll('select');
 const mapFeatures = mapForm.querySelector('.map__features');
 
@@ -17,8 +19,14 @@ const typeOfHouse = adForm.querySelector('#type');
 const price = adForm.querySelector('#price');
 
 export const location = adForm.querySelector('#address');
-export const setAddressInput = (coords) => {
-  location.value = coords;
+
+export const setAddressInput = ({lat, lng}) => {
+  location.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+};
+
+export const resetAdForm = () => {
+  adForm.reset();
+  setAddressInput({lat: defaultCoords.lat, lng: defaultCoords.lng});
 };
 
 
@@ -44,13 +52,13 @@ const minPrice = {
   'palace': 10000,
 };
 
-const onTimeChange = (timeValue) => {
-  checkInTime.value = timeValue.target.value;
-  checkOutTime.value = timeValue.target.value;
+const timeChange = (evt) => {
+  checkInTime.value = evt.target.value;
+  checkOutTime.value = evt.target.value;
 };
 
-checkInTime.addEventListener('change', onTimeChange);
-checkOutTime.addEventListener('change', onTimeChange);
+checkInTime.addEventListener('change', timeChange);
+checkOutTime.addEventListener('change', timeChange);
 
 const onTypeOfHouseChange = () => {
   const typeOfHouseValue = typeOfHouse.value;
@@ -82,14 +90,14 @@ const checkRoomsAvailable = () => {
 
 const checkTitleLength = () => {
   const valueLength = adTitle.value.length;
+  let error = '';
 
   if (valueLength < minTitleLength) {
-    adTitle.setCustomValidity(`Добавьте еще ${minTitleLength - valueLength} символа`);
+    error = `Добавьте еще ${minTitleLength - valueLength} символа`;
   } else if (valueLength > maxTitleLength) {
-    adTitle.setCustomValidity(`Удалите лишние ${valueLength - maxTitleLength} символа`);
-  } else {
-    adTitle.setCustomValidity('');
+    error = `Удалите лишние ${valueLength - maxTitleLength} символа`;
   }
+  adTitle.setCustomValidity(error);
   adTitle.reportValidity();
 };
 
@@ -125,3 +133,5 @@ export const activateForm = () => {
     fieldset.disabled = false;
   });
 };
+
+export const resetButton = adForm.querySelector('.ad-form__reset');

@@ -1,40 +1,12 @@
-import { adForm } from './form.js';
-
-import { activateApp } from './stateApp.js';
-import { similarOffers } from './data.js';
 import { fillTemplateCard } from './card.js';
-import { setAddressInput } from './form.js';
-
-const resetButton = adForm.querySelector('.ad-form__reset');
 
 const defaultCoords = {
   lat: 35.6895000,
   lng: 139.6917100,
 };
 
-
-const pins = similarOffers(5);
-
-
-const map = L.map('map-canvas')
-  .on('load', () => activateApp())
-  .setView({
-    lat: defaultCoords.lat,
-    lng: defaultCoords.lng,
-  }, 15);
-
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>',
-  },
-).addTo(map);
-
-const defaultMainPin = L.icon({
-  iconUrl: '../img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
-});
+let map;
+let adMarkersGroup;
 
 const mainPin = L.marker(
   {
@@ -43,24 +15,39 @@ const mainPin = L.marker(
   },
   {
     draggable: true,
-    icon: defaultMainPin,
+    icon: L.icon({
+      iconUrl: '../img/main-pin.svg',
+      iconSize: [52, 52],
+      iconAnchor: [26, 52],
+    }),
   },
 );
 
-mainPin.addTo(map);
+const initializationMap = ({ mapLoad, onMainPinMoveEnd }) => {
+  map = L.map('map-canvas')
+    .on('load', mapLoad)
+    .setView({
+      lat: defaultCoords.lat,
+      lng: defaultCoords.lng,
+    }, 11);
 
-const getMainPinCoords = () => {
-  setAddressInput(`${defaultCoords.lat}, ${defaultCoords.lng}`);
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+
+  mainPin.addTo(map);
+
+  adMarkersGroup = L.layerGroup().addTo(map);
 
   mainPin.on('moveend', (evt) => {
-    const newCoordLat = (evt.target.getLatLng().lat).toFixed(5);
-    const newCoordLng = (evt.target.getLatLng().lng).toFixed(5);
-    setAddressInput(`${newCoordLat}, ${newCoordLng}`);
+    onMainPinMoveEnd(evt.target.getLatLng());
   });
 };
 
-resetButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
+const resetMap = () => {
   mainPin.setLatLng({
     lat: defaultCoords.lat,
     lng: defaultCoords.lng,
@@ -68,30 +55,24 @@ resetButton.addEventListener('click', (evt) => {
   map.setView({
     lat: defaultCoords.lat,
     lng: defaultCoords.lng,
-  }, 15);
-  setAddressInput(`${defaultCoords.lat}, ${defaultCoords.lng}`);
-});
-
-const addMarkersGroup = L.layerGroup().addTo(map);
-const adMarkerIcon = L.icon({
-  iconUrl: '../img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
+  }, 11);
+};
 
 const createAdMarker = (ad) => {
   const { lat, lng } = ad.location;
   const adMarker = L.marker(
+    { lat, lng },
     {
-      lat,
-      lng,
-    },
-    {
-      adMarkerIcon,
+      icon: L.icon({
+        iconUrl: '../img/pin.svg',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      }),
     },
   );
+
   adMarker
-    .addTo(addMarkersGroup)
+    .addTo(adMarkersGroup)
     .bindPopup(
       fillTemplateCard(ad),
       {
@@ -100,6 +81,4 @@ const createAdMarker = (ad) => {
     );
 };
 
-pins.forEach((pin) => createAdMarker(pin));
-
-getMainPinCoords();
+export { defaultCoords, createAdMarker, initializationMap, resetMap };
