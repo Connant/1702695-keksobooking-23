@@ -42,7 +42,7 @@ const initializationMap = ({ mapLoad, onMainPinMoveEnd }) => {
 
   adMarkersGroup = L.layerGroup().addTo(map);
 
-  mainPin.on('moveend', (evt) => {
+  mainPin.on('move', (evt) => {
     onMainPinMoveEnd(evt.target.getLatLng());
   });
 };
@@ -64,7 +64,7 @@ const createAdMarker = (ad) => {
     { lat, lng },
     {
       icon: L.icon({
-        iconUrl: '../img/pin.svg',
+        iconUrl: 'img/pin.svg',
         iconSize: [40, 40],
         iconAnchor: [20, 40],
       }),
@@ -81,4 +81,9 @@ const createAdMarker = (ad) => {
     );
 };
 
-export { defaultCoords, createAdMarker, initializationMap, resetMap };
+
+const removeAdMarkers = () => {
+  adMarkersGroup.clearLayers();
+};
+
+export { defaultCoords, createAdMarker, initializationMap, resetMap, removeAdMarkers };
