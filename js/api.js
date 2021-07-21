@@ -7,7 +7,7 @@ const getData = () => fetch('https://23.javascript.pages.academy/keksobooking/da
   })
   .then((response) => response.json());
 
-const sendData = (form) => fetch('https://23.javascript.pages.academy/keksobooking/data',
+const sendData = (form) => fetch('https://23.javascript.pages.academy/keksobooking',
   {
     method: 'POST',
     body: new FormData(form),

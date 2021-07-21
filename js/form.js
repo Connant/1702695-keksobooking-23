@@ -1,4 +1,3 @@
-import { showPopup, showErrorPopup } from './popup.js';
 import { defaultCoords } from './map.js';
 
 export const adForm = document.querySelector('.ad-form');
@@ -134,22 +133,5 @@ export const activateForm = () => {
     fieldset.disabled = false;
   });
 };
-
-const resetApp = () => {
-  resetAdForm();
-  mapForm.reset();
-};
-
-export const setFormSubmit = (send) => {
-  adForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    send(evt.target)
-      .then(showPopup)
-      .then(resetApp)
-      .catch(showErrorPopup);
-  });
-};
-
-setFormSubmit();
 
 export const resetButton = adForm.querySelector('.ad-form__reset');

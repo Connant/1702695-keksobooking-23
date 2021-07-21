@@ -1,24 +1,17 @@
-// import './stateApp.js';
-import './card.js';
-// import './form.js';
-import './popup.js';
-import './api.js';
-import './map.js';
-
 import { defaultCoords, createAdMarker, initializationMap, resetMap } from './map.js';
 import { showAlert } from './utils.js';
+import { showErrorPopup, showPopup } from './popup.js';
+import { sendData, getData } from './api.js';
 import {
   adForm, resetAdForm, mapForm, activateForm, disableForm,
   activateFilters, disableFilters, setAddressInput, resetButton
 } from './form.js';
-import { showErrorPopup, showPopup } from './popup.js';
-import { sendData, getData } from './api.js';
 
 const renderAds = (ads) => {
   ads.slice(0, 10).forEach((ad) => createAdMarker(ad));
 };
 
-const showMessageError = (error) => {
+const showError = (error) => {
   showAlert(`При загрузке объявления произошла ошибка ${error}`);
 };
 
@@ -51,14 +44,14 @@ const setFormSubmit = (send) => {
 const initApp = () => {
   deactivateApp();
   initializationMap({
-    onMapLoad: activateApp,
+    mapLoad: activateApp,
     onMainPinMoveEnd: setAddressInput,
   });
   setAddressInput({ lat: defaultCoords.lat, lng: defaultCoords.lng });
   setFormSubmit(sendData);
   getData()
     .then(renderAds)
-    .catch(showMessageError);
+    .catch(showError);
 
   resetButton.addEventListener('click', (evt) => {
     evt.preventDefault();
