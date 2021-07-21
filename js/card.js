@@ -1,25 +1,34 @@
-import {
-  HOUSE_TYPE,
-  card,
-  cardTitle,
-  cardAddress,
-  cardPrice,
-  cardType,
-  cardCapacity,
-  cardCheckTime,
-  cardFeatures,
-  cardPhotos,
-  cardAvatar,
-  cardDescription
-} from './data.js';
-
 const fillElementAdsData = (adsData, element, text) => {
   if (!adsData) {
-    return element.classList.add('visually-hidden');
+    element.classList.add('visually-hidden');
+    return;
   }
   element.textContent = text;
 };
+
+const HOUSE_TYPE = {
+  'palace': 'Дворец',
+  'flat': 'Квартира',
+  'house': 'Дом',
+  'bungalow': 'Бунгало',
+  'hotel': 'Отель',
+};
+
 const fillTemplateCard = ({ author, offer }) => {
+  const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
+
+  const card = cardTemplate.cloneNode(true);
+  const cardTitle = card.querySelector('.popup__title');
+  const cardAddress = card.querySelector('.popup__text--address');
+  const cardPrice = card.querySelector('.popup__text--price');
+  const cardType = card.querySelector('.popup__type');
+  const cardCapacity = card.querySelector('.popup__text--capacity');
+  const cardCheckTime = card.querySelector('.popup__text--time');
+  const cardFeatures = card.querySelector('.popup__features');
+  const cardPhotos = card.querySelector('.popup__photos');
+  const cardAvatar = card.querySelector('.popup__avatar');
+  const cardDescription = card.querySelector('.popup__description');
+
   fillElementAdsData(offer.title, cardTitle, offer.title);
   fillElementAdsData(offer.address, cardAddress, offer.address);
   fillElementAdsData(offer.price, cardPrice, `${offer.price} ₽/ночь`);
@@ -30,12 +39,12 @@ const fillTemplateCard = ({ author, offer }) => {
     cardAvatar.classList.add('visually-hidden');
   } else {
     cardAvatar.src = author.avatar;
-    if (!(offer.rooms) & !(offer.guests)) {
+    if (!(offer.rooms) || !(offer.guests)) {
       cardCapacity.classList.add('visually-hidden');
     } else {
       cardCapacity.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
     }
-    if (!(offer.checkin) & !(offer.checkout)) {
+    if (!(offer.checkin) || !(offer.checkout)) {
       cardCheckTime.classList.add('visually-hidden');
     } else {
       cardCheckTime.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;

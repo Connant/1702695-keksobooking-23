@@ -1,9 +1,9 @@
 import { defaultCoords } from './map.js';
 
-export const adForm = document.querySelector('.ad-form');
+const adForm = document.querySelector('.ad-form');
 const formFieldsets = adForm.querySelectorAll('fieldset');
 
-export const mapForm = document.querySelector('.map__filters');
+const mapForm = document.querySelector('.map__filters');
 const mapSelects = mapForm.querySelectorAll('select');
 const mapFeatures = mapForm.querySelector('.map__features');
 
@@ -18,38 +18,37 @@ const checkOutTime = adForm.querySelector('#timeout');
 const typeOfHouse = adForm.querySelector('#type');
 const price = adForm.querySelector('#price');
 
-export const location = adForm.querySelector('#address');
+const location = adForm.querySelector('#address');
 
-export const setAddressInput = ({lat, lng}) => {
-  location.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+const Rooms = {
+  ONE: '1',
+  TWO: '2',
+  THREE: '3',
+  ONE_HUNDRED: '100',
 };
 
-export const resetAdForm = () => {
-  adForm.reset();
-  setAddressInput({lat: defaultCoords.lat, lng: defaultCoords.lng});
+const Guests = {
+  ONE: '1',
+  TWO: '2',
+  THREE: '3',
+  NON_GUESTS: '0',
 };
 
-
-const rooms = {
-  one: '1',
-  two: '2',
-  three: '3',
-  oneHundreed: '100',
-};
-
-const guests = {
-  one: '1',
-  two: '2',
-  three: '3',
-  nonGuest: '0',
-};
-
-const minPrice = {
+const MinPrice = {
   'bungalow': 0,
   'flat': 1000,
   'hotel': 3000,
   'house': 5000,
   'palace': 10000,
+};
+
+const setAddressInput = ({ lat, lng }) => {
+  location.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+};
+
+const resetAdForm = () => {
+  adForm.reset();
+  setAddressInput({ lat: defaultCoords.lat, lng: defaultCoords.lng });
 };
 
 const timeChange = (evt) => {
@@ -62,8 +61,8 @@ checkOutTime.addEventListener('change', timeChange);
 
 const onTypeOfHouseChange = () => {
   const typeOfHouseValue = typeOfHouse.value;
-  price.setAttribute('min', minPrice[typeOfHouseValue]);
-  price.placeholder = minPrice[typeOfHouseValue];
+  price.setAttribute('min', MinPrice[typeOfHouseValue]);
+  price.placeholder = MinPrice[typeOfHouseValue];
 };
 
 typeOfHouse.addEventListener('change', onTypeOfHouseChange);
@@ -73,14 +72,14 @@ const checkRoomsAvailable = () => {
   const numberOfGuests = guestsSelect.value;
   let error = '';
 
-  if (numberOfRooms === rooms.oneHundreed && numberOfGuests !== guests.nonGuest) {
+  if (numberOfRooms === Rooms.ONE_HUNDRED && numberOfGuests !== Guests.NON_GUESTS) {
     error += 'Не для гостей';
-  } else if (numberOfRooms === rooms.oneHundreed && numberOfGuests === guests.nonGuest) {
+  } else if (numberOfRooms === Rooms.ONE_HUNDRED && numberOfGuests === Guests.NON_GUESTS) {
     guestsSelect.setCustomValidity('');
     return;
-  } else if (numberOfRooms === rooms.one && numberOfGuests !== guests.one) {
+  } else if (numberOfRooms === Rooms.ONE && numberOfGuests !== Guests.ONE) {
     error += 'Для 1 гостя';
-  } else if (numberOfGuests === guests.nonGuest || numberOfGuests > numberOfRooms) {
+  } else if (numberOfGuests === Guests.NON_GUESTS || numberOfGuests > numberOfRooms) {
     error += `Не более ${numberOfRooms} гостей`;
   }
 
@@ -104,7 +103,7 @@ const checkTitleLength = () => {
 adTitle.addEventListener('input', checkTitleLength);
 adForm.addEventListener('change', checkRoomsAvailable);
 
-export const disableFilters = () => {
+const disableFilters = () => {
   mapForm.classList.add('map__filters--disabled');
   mapSelects.forEach((select) => {
     select.disabled = true;
@@ -112,7 +111,7 @@ export const disableFilters = () => {
   mapFeatures.disabled = true;
 };
 
-export const activateFilters = () => {
+const activateFilters = () => {
   mapForm.classList.remove('map__filters--disabled');
   mapSelects.forEach((select) => {
     select.disabled = false;
@@ -120,14 +119,14 @@ export const activateFilters = () => {
   mapFeatures.disabled = false;
 };
 
-export const disableForm = () => {
+const disableForm = () => {
   adForm.classList.add('ad-form--disabled');
   formFieldsets.forEach((fieldset) => {
     fieldset.disabled = true;
   });
 };
 
-export const activateForm = () => {
+const activateForm = () => {
   adForm.classList.remove('ad-form--disabled');
   formFieldsets.forEach((fieldset) => {
     fieldset.disabled = false;
@@ -135,3 +134,5 @@ export const activateForm = () => {
 };
 
 export const resetButton = adForm.querySelector('.ad-form__reset');
+
+export { adForm, mapForm, price, setAddressInput, resetAdForm, disableFilters, activateFilters, disableForm, activateForm };
