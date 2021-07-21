@@ -2,10 +2,10 @@ const any = 'any';
 export const filterForm = document.querySelector('.map__filters');
 const housingPrice = filterForm.querySelector('#housing-price');
 
-const priceRange = {
-  middle: 'middle',
-  low: 'low',
-  high: 'high',
+const PriceRange = {
+  MIDDLE: 'middle',
+  LOW: 'low',
+  HIGH: 'high',
 };
 
 const minPrice = 10000;
@@ -28,11 +28,11 @@ const filterHouseByType = (ad) => {
 export const filterHouseByPrice = (ad) => {
   const filterValue = housingPrice.value;
   switch (filterValue) {
-    case priceRange.low:
+    case PriceRange.LOW:
       return ad.offer.price <= minPrice;
-    case priceRange.middle:
+    case PriceRange.MIDDLE:
       return ad.offer.price >= minPrice && ad.offer.price <= maxPrice;
-    case priceRange.high:
+    case PriceRange.HIGH:
       return ad.offer.price >= maxPrice;
   }
   return true;

@@ -1,12 +1,12 @@
-import { defaultCoords, createAdMarker, initializationMap, resetMap, removeAdMarkers } from './map.js';
+import { defaultCoords, createAdMarker, initMap, resetMap, removeAdMarkers } from './map.js';
 import { showAlert } from './utils.js';
 import { showErrorPopup, showPopup } from './popup.js';
 import { sendData, getData } from './api.js';
-import { getFilteredAds, filterForm } from './filtres.js';
+import { getFilteredAds, filterForm } from './filters.js';
 import { debounce } from './utils/debounce.js';
 import {
   adForm, resetAdForm, mapForm, activateForm, disableForm,
-  activateFilters, disableFilters, setAddressInput, resetButton
+  activateFilters, disableFilters, setAddressInput, resetButton, price
 } from './form.js';
 
 
@@ -25,17 +25,13 @@ const resetApp = () => {
   resetAdForm();
   mapForm.reset();
   filterForm.reset();
+  price.reset();
   renderAds(adsData);
 };
 
 const deactivateApp = () => {
   disableForm();
   disableFilters();
-};
-
-const activateApp = () => {
-  activateForm();
-  activateFilters();
 };
 
 const setFormSubmit = (send) => {
@@ -54,16 +50,11 @@ const onFilterChange = debounce((ads) => {
   renderAds(newAds);
 });
 
-const initApp = () => {
-  deactivateApp();
-  initializationMap({
-    mapLoad: activateApp,
-    onMainPinMoveEnd: setAddressInput,
-  });
-  setAddressInput({ lat: defaultCoords.lat, lng: defaultCoords.lng });
-  setFormSubmit(sendData);
+const activateApp = () => {
+  activateForm();
   getData()
     .then((ads) => {
+      activateFilters();
       adsData = ads;
       renderAds(ads);
       filterForm.addEventListener('change', () => {
@@ -71,6 +62,16 @@ const initApp = () => {
       });
     })
     .catch(showError);
+};
+
+const initApp = () => {
+  deactivateApp();
+  initMap({
+    mapLoad: activateApp,
+    onMainPinMoveEnd: setAddressInput,
+  });
+  setAddressInput({ lat: defaultCoords.lat, lng: defaultCoords.lng });
+  setFormSubmit(sendData);
 
   resetButton.addEventListener('click', (evt) => {
     evt.preventDefault();

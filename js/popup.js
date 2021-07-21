@@ -1,4 +1,4 @@
-import { escEvent, enterEvent } from './utils.js';
+import { escEvent } from './utils.js';
 
 const successPopupTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorPopupTemplate = document.querySelector('#error').content.querySelector('.error');
@@ -21,14 +21,14 @@ const closeErrorPopup = () => {
 };
 
 const onSuccessPopupKeydown = (evt) => {
-  if (escEvent(evt) || enterEvent(evt)) {
+  if (escEvent(evt)) {
     evt.preventDefault();
     closeSuccessPopup();
   }
 };
 
 const onErrorPopupKeydown = (evt) => {
-  if (escEvent(evt) || enterEvent(evt)) {
+  if (escEvent(evt)) {
     evt.preventDefault();
     closeErrorPopup();
   }

@@ -23,7 +23,7 @@ const mainPin = L.marker(
   },
 );
 
-const initializationMap = ({ mapLoad, onMainPinMoveEnd }) => {
+const initMap = ({ mapLoad, onMainPinMoveEnd }) => {
   map = L.map('map-canvas')
     .on('load', mapLoad)
     .setView({
@@ -86,4 +86,4 @@ const removeAdMarkers = () => {
   adMarkersGroup.clearLayers();
 };
 
-export { defaultCoords, createAdMarker, initializationMap, resetMap, removeAdMarkers };
+export { defaultCoords, createAdMarker, initMap, resetMap, removeAdMarkers };
