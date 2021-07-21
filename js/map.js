@@ -1,20 +1,15 @@
-import { adForm } from './form.js';
-
+import { resetButton } from './form.js';
 import { activateApp } from './stateApp.js';
 import { similarOffers } from './data.js';
 import { fillTemplateCard } from './card.js';
 import { setAddressInput } from './form.js';
 
-const resetButton = adForm.querySelector('.ad-form__reset');
-
-const defaultCoords = {
+export const defaultCoords = {
   lat: 35.6895000,
   lng: 139.6917100,
 };
 
-
 const pins = similarOffers(5);
-
 
 const map = L.map('map-canvas')
   .on('load', () => activateApp())
@@ -50,14 +45,15 @@ const mainPin = L.marker(
 mainPin.addTo(map);
 
 const getMainPinCoords = () => {
-  setAddressInput(`${defaultCoords.lat}, ${defaultCoords.lng}`);
+  setAddressInput({lat: defaultCoords.lat, lng: defaultCoords.lng});
 
-  mainPin.on('moveend', (evt) => {
-    const newCoordLat = (evt.target.getLatLng().lat).toFixed(5);
-    const newCoordLng = (evt.target.getLatLng().lng).toFixed(5);
-    setAddressInput(`${newCoordLat}, ${newCoordLng}`);
+  mainPin.on('move', (evt) => {
+    const newCoordLat = (evt.target.getLatLng().lat);
+    const newCoordLng = (evt.target.getLatLng().lng);
+    setAddressInput({lat: newCoordLat, lng: newCoordLng});
   });
 };
+
 
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();

@@ -1,4 +1,5 @@
 import { showPopup, showErrorPopup } from './popup.js';
+import { defaultCoords } from './map.js';
 
 export const adForm = document.querySelector('.ad-form');
 const formFieldsets = adForm.querySelectorAll('fieldset');
@@ -19,8 +20,14 @@ const typeOfHouse = adForm.querySelector('#type');
 const price = adForm.querySelector('#price');
 
 export const location = adForm.querySelector('#address');
-export const setAddressInput = (coords) => {
-  location.value = coords;
+
+export const setAddressInput = ({lat, lng}) => {
+  location.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+};
+
+export const resetAdForm = () => {
+  adForm.reset();
+  setAddressInput({lat: defaultCoords.lat, lng: defaultCoords.lng});
 };
 
 
@@ -128,11 +135,21 @@ export const activateForm = () => {
   });
 };
 
+const resetApp = () => {
+  resetAdForm();
+  mapForm.reset();
+};
+
 export const setFormSubmit = (send) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     send(evt.target)
-      .then(() => showPopup())
-      .catch(() => showErrorPopup());
+      .then(showPopup)
+      .then(resetApp)
+      .catch(showErrorPopup);
   });
 };
+
+setFormSubmit();
+
+export const resetButton = adForm.querySelector('.ad-form__reset');
