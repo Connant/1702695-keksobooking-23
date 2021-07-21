@@ -22,6 +22,7 @@ const resetApp = () => {
   mapForm.reset();
   filterForm.reset();
   price.placeholder = MinPrice[typeOfHouse.value];
+  price.min = MinPrice[typeOfHouse.value];
   renderAds(adsData);
 };
 
