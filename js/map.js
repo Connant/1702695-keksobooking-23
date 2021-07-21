@@ -42,7 +42,7 @@ const initializationMap = ({ mapLoad, onMainPinMoveEnd }) => {
 
   adMarkersGroup = L.layerGroup().addTo(map);
 
-  mainPin.on('moveend', (evt) => {
+  mainPin.on('move', (evt) => {
     onMainPinMoveEnd(evt.target.getLatLng());
   });
 };

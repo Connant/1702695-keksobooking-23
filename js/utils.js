@@ -40,7 +40,7 @@ const showAlert = (message) => {
 
   setTimeout(() => {
     alertContainer.remove();
-  }, 120);
+  }, 120000);
 };
 
 
