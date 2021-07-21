@@ -6,16 +6,12 @@ import { getFilteredAds, filterForm } from './filters.js';
 import { debounce } from './utils/debounce.js';
 import {
   adForm, resetAdForm, mapForm, activateForm, disableForm,
-  activateFilters, disableFilters, setAddressInput, resetButton, price
+  activateFilters, disableFilters, setAddressInput, resetButton, price, MinPrice, typeOfHouse
 } from './form.js';
 
 
 export const renderAds = (ads) => {
   ads.slice(0, 10).forEach((ad) => createAdMarker(ad));
-};
-
-const showError = (error) => {
-  showAlert(`При загрузке объявления произошла ошибка ${error}`);
 };
 
 let adsData;
@@ -25,7 +21,7 @@ const resetApp = () => {
   resetAdForm();
   mapForm.reset();
   filterForm.reset();
-  price.reset();
+  price.placeholder = MinPrice[typeOfHouse.value];
   renderAds(adsData);
 };
 
@@ -49,6 +45,10 @@ const onFilterChange = debounce((ads) => {
   removeAdMarkers();
   renderAds(newAds);
 });
+
+const showError = (error) => {
+  showAlert(`При загрузке объявления произошла ошибка ${error}`);
+};
 
 const activateApp = () => {
   activateForm();

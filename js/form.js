@@ -135,4 +135,4 @@ const activateForm = () => {
 
 export const resetButton = adForm.querySelector('.ad-form__reset');
 
-export { adForm, mapForm, price, setAddressInput, resetAdForm, disableFilters, activateFilters, disableForm, activateForm };
+export { adForm, mapForm, price, setAddressInput, MinPrice, resetAdForm, typeOfHouse, disableFilters, activateFilters, disableForm, activateForm };
