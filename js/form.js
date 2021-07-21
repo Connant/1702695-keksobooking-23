@@ -4,7 +4,7 @@ import { defaultCoords } from './map.js';
 export const adForm = document.querySelector('.ad-form');
 const formFieldsets = adForm.querySelectorAll('fieldset');
 
-const mapForm = document.querySelector('.map__filters');
+export const mapForm = document.querySelector('.map__filters');
 const mapSelects = mapForm.querySelectorAll('select');
 const mapFeatures = mapForm.querySelector('.map__features');
 
