@@ -1,7 +1,5 @@
-// import { generateObject } from './data.js';
-import { HOUSE_TYPE } from './data.js';
-
 import {
+  HOUSE_TYPE,
   card,
   cardTitle,
   cardAddress,
@@ -21,9 +19,7 @@ const fillElementAdsData = (adsData, element, text) => {
   }
   element.textContent = text;
 };
-
 const fillTemplateCard = ({ author, offer }) => {
-
   fillElementAdsData(offer.title, cardTitle, offer.title);
   fillElementAdsData(offer.address, cardAddress, offer.address);
   fillElementAdsData(offer.price, cardPrice, `${offer.price} ₽/ночь`);
@@ -34,58 +30,47 @@ const fillTemplateCard = ({ author, offer }) => {
     cardAvatar.classList.add('visually-hidden');
   } else {
     cardAvatar.src = author.avatar;
-  }
+    if (!(offer.rooms) & !(offer.guests)) {
+      cardCapacity.classList.add('visually-hidden');
+    } else {
+      cardCapacity.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
+    }
+    if (!(offer.checkin) & !(offer.checkout)) {
+      cardCheckTime.classList.add('visually-hidden');
+    } else {
+      cardCheckTime.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+    }
 
-  if (!(offer.rooms) & !(offer.guests)) {
-    cardCapacity.classList.add('visually-hidden');
-  } else {
-    cardCapacity.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
-  }
+    const fillElementDataArray = (element, array, handler) => {
+      element.innerHTML = '';
+      if (!array) {
+        element.classList.add('visually-hidden');
+      } else {
+        array.forEach(handler);
+      }
+    };
 
-  if (!(offer.checkin) & !(offer.checkout)) {
-    cardCheckTime.classList.add('visually-hidden');
-  } else {
-    cardCheckTime.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
-  }
-
-  cardFeatures.innerHTML = '';
-  if (!offer.features) {
-    cardFeatures.classList.add('visually-hidden');
-  } else {
-    offer.features.forEach((feature) => {
+    fillElementDataArray(cardFeatures, offer.features, (arrayItem) => {
       const featureElement = document.createElement('li');
       featureElement.classList.add(
         'popup__feature',
-        `popup__feature--${feature}`,
+        `popup__feature--${arrayItem}`,
       );
       cardFeatures.appendChild(featureElement);
     });
-  }
 
-  cardPhotos.innerHTML = '';
-  if (!offer.features) {
-    cardFeatures.classList.add('visually-hidden');
-  } else {
-    offer.photos.forEach((photo) => {
+    fillElementDataArray(cardPhotos, offer.photos, (arrayItem) => {
       const photoElement = document.createElement('img');
       photoElement.classList.add('popup__photo');
       photoElement.width = 45;
       photoElement.height = 40;
       photoElement.alt = 'Фотография жилья';
-      photoElement.src = photo;
+      photoElement.src = arrayItem;
       cardPhotos.appendChild(photoElement);
     });
+
+    return card;
   }
-
-  return card;
 };
-
-// export const createCards = (data) => {
-//   const similarAdsFragment = document.createDocumentFragment();
-//   const element = fillTemplateCard(data);
-//   similarAdsFragment.appendChild(element);
-
-//   return mapCanvas.appendChild(similarAdsFragment);
-// };
 
 export { fillTemplateCard };
