@@ -10,33 +10,33 @@ const closeSuccessPopup = () => {
   if (successPopup !== null) {
     successPopup.remove();
     successPopup = null;
+    document.removeEventListener('keydown', onSuccessPopupKeydown);
   }
-  document.removeEventListener('keydown', closeSuccessPopup);
 };
 
 const closeErrorPopup = () => {
   if (errorPopup !== null) {
     errorPopup.remove();
     errorPopup = null;
+    document.removeEventListener('keydown', onErrorPopupKeydown);
   }
-  document.removeEventListener('keydown', closeErrorPopup);
 };
 
-const onSuccessPopupKeydown = (evt) => {
+function onSuccessPopupKeydown (evt) {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     closeSuccessPopup();
+    document.removeEventListener('keydown', onSuccessPopupKeydown);
   }
-  document.removeEventListener('keydown', onSuccessPopupKeydown);
-};
+}
 
-const onErrorPopupKeydown = (evt) => {
+function onErrorPopupKeydown (evt) {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     closeErrorPopup();
+    document.removeEventListener('keydown', onErrorPopupKeydown);
   }
-  document.removeEventListener('keydown', onErrorPopupKeydown);
-};
+}
 
 const showPopup = () => {
   successPopup = successPopupTemplate.cloneNode(true);
