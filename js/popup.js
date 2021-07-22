@@ -1,4 +1,4 @@
-import { escEvent } from './utils.js';
+import { isEscEvent } from './utils.js';
 
 const successPopupTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorPopupTemplate = document.querySelector('#error').content.querySelector('.error');
@@ -11,6 +11,7 @@ const closeSuccessPopup = () => {
     successPopup.remove();
     successPopup = null;
   }
+  document.removeEventListener('keydown', closeSuccessPopup);
 };
 
 const closeErrorPopup = () => {
@@ -18,20 +19,23 @@ const closeErrorPopup = () => {
     errorPopup.remove();
     errorPopup = null;
   }
+  document.removeEventListener('keydown', closeErrorPopup);
 };
 
 const onSuccessPopupKeydown = (evt) => {
-  if (escEvent(evt)) {
+  if (isEscEvent(evt)) {
     evt.preventDefault();
     closeSuccessPopup();
   }
+  document.removeEventListener('keydown', onSuccessPopupKeydown);
 };
 
 const onErrorPopupKeydown = (evt) => {
-  if (escEvent(evt)) {
+  if (isEscEvent(evt)) {
     evt.preventDefault();
     closeErrorPopup();
   }
+  document.removeEventListener('keydown', onErrorPopupKeydown);
 };
 
 const showPopup = () => {

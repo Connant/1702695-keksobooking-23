@@ -1,12 +1,13 @@
-const escEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+const ALERT_TIME = 1200;
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 1100;
+  alertContainer.style.zIndex = '1100';
   alertContainer.style.position = 'absolute';
-  alertContainer.style.left = 0;
+  alertContainer.style.left = '0';
   alertContainer.style.top = '95px';
-  alertContainer.style.right = 0;
+  alertContainer.style.right = '0';
   alertContainer.style.padding = '10px 3px';
   alertContainer.style.fontSize = '30px';
   alertContainer.style.textAlign = 'center';
@@ -20,7 +21,7 @@ const showAlert = (message) => {
 
   setTimeout(() => {
     alertContainer.remove();
-  }, 1200000);
+  }, ALERT_TIME);
 };
 
-export { escEvent, showAlert };
+export { isEscEvent, showAlert };

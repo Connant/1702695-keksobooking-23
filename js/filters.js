@@ -59,14 +59,11 @@ const filterHouseByFeatures = (ad) => Array.from(mapCheckbox)
     return ad.offer.features.includes(checkbox.value);
   });
 
-export const getFilteredAds = (ads) => {
-  const filteredAds = ads.filter((ad) => (
-    filterHouseByType(ad) &&
-    filterHouseByPrice(ad) &&
-    filterHouseByRooms(ad) &&
-    filterHouseByGuests(ad) &&
-    filterHouseByFeatures(ad)
-  ));
-  return filteredAds;
-};
+export const getFilteredAds = (ads) => ads.filter((ad) => (
+  filterHouseByType(ad) &&
+  filterHouseByPrice(ad) &&
+  filterHouseByRooms(ad) &&
+  filterHouseByGuests(ad) &&
+  filterHouseByFeatures(ad)
+));
 

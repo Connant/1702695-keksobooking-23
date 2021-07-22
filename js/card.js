@@ -14,6 +14,9 @@ const HOUSE_TYPE = {
   'hotel': 'Отель',
 };
 
+const ELEMENT_WIDTH = 45;
+const ELEMENT_HEIGHT = 60;
+
 const fillTemplateCard = ({ author, offer }) => {
   const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
@@ -71,8 +74,8 @@ const fillTemplateCard = ({ author, offer }) => {
     fillElementDataArray(cardPhotos, offer.photos, (arrayItem) => {
       const photoElement = document.createElement('img');
       photoElement.classList.add('popup__photo');
-      photoElement.width = 45;
-      photoElement.height = 40;
+      photoElement.width = ELEMENT_WIDTH;
+      photoElement.height = ELEMENT_HEIGHT;
       photoElement.alt = 'Фотография жилья';
       photoElement.src = arrayItem;
       cardPhotos.appendChild(photoElement);
