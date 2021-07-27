@@ -1,3 +1,4 @@
+import './photo.js';
 import { defaultCoords, createAdMarker, initMap, resetMap, removeAdMarkers } from './map.js';
 import { showAlert } from './utils.js';
 import { showErrorPopup, showPopup } from './popup.js';

@@ -1,4 +1,5 @@
 import { defaultCoords } from './map.js';
+// import { onChooserChange } from './photo.js';
 
 const adForm = document.querySelector('.ad-form');
 const formFieldsets = adForm.querySelectorAll('fieldset');
@@ -42,6 +43,10 @@ const MinPrice = {
   'palace': 10000,
 };
 
+const AVATAR_DEFAULT = './img/avatars/default.png';
+const avatarImg = adForm.querySelector('.ad-form-header__preview img');
+const houseImg = adForm.querySelector('.ad-form__photo');
+
 const setAddressInput = ({ lat, lng }) => {
   location.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 };
@@ -49,7 +54,10 @@ const setAddressInput = ({ lat, lng }) => {
 const resetAdForm = () => {
   adForm.reset();
   setAddressInput({ lat: defaultCoords.lat, lng: defaultCoords.lng });
+  avatarImg.src = AVATAR_DEFAULT;
+  houseImg.innerHTML = '';
 };
+
 
 const timeChange = (evt) => {
   checkInTime.value = evt.target.value;
@@ -135,4 +143,4 @@ const activateForm = () => {
 
 export const resetButton = adForm.querySelector('.ad-form__reset');
 
-export { adForm, mapForm, price, setAddressInput, MinPrice, resetAdForm, typeOfHouse, disableFilters, activateFilters, disableForm, activateForm };
+export { avatarImg, houseImg, adForm, mapForm, price, setAddressInput, MinPrice, resetAdForm, typeOfHouse, disableFilters, activateFilters, disableForm, activateForm };
